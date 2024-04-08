@@ -1,4 +1,5 @@
 module ru.sinitsynme.socketfilword {
+    requires java.sql;
     requires javafx.controls;
     requires javafx.fxml;
 
