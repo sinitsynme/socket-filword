@@ -1,17 +1,23 @@
 package ru.sinitsynme.socketfilword.server;
 
 import ru.sinitsynme.socketfilword.server.dto.FinishConnectionDto;
+import ru.sinitsynme.socketfilword.server.messageProcessor.ClientRequestProcessor;
+import ru.sinitsynme.socketfilword.service.AuthorizationService;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import static ru.sinitsynme.socketfilword.repository.FilwordRepositories.USER_JDBC_REPOSITORY;
+
 public class ServerThread extends Thread {
     private Socket clientSocket;
+    private final ClientRequestProcessor clientRequestProcessor;
 
     public ServerThread(final Socket clientSocket) {
         this.clientSocket = clientSocket;
+        clientRequestProcessor = new ClientRequestProcessor(new AuthorizationService(USER_JDBC_REPOSITORY));
     }
 
     public Socket getClientSocket() {
@@ -33,7 +39,7 @@ public class ServerThread extends Thread {
                     break;
                 }
 
-                Object response = prepareResponse(clientRequest);
+                Object response = clientRequestProcessor.processRequest(clientRequest);
                 clientOutputStream.writeObject(response);
             }
 
@@ -47,8 +53,5 @@ public class ServerThread extends Thread {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-    private Object prepareResponse(Object clientRequest) {
-        return new Object();
     }
 }

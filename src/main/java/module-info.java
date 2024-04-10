@@ -7,4 +7,6 @@ module ru.sinitsynme.socketfilword {
 
     opens ru.sinitsynme.socketfilword to javafx.fxml;
     exports ru.sinitsynme.socketfilword;
+    exports ru.sinitsynme.socketfilword.controller;
+    opens ru.sinitsynme.socketfilword.controller to javafx.fxml;
 }
