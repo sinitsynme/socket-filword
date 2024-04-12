@@ -3,12 +3,15 @@ package ru.sinitsynme.socketfilword.server;
 import ru.sinitsynme.socketfilword.server.dto.FinishConnectionDto;
 import ru.sinitsynme.socketfilword.server.messageProcessor.ClientRequestProcessor;
 import ru.sinitsynme.socketfilword.service.AuthorizationService;
+import ru.sinitsynme.socketfilword.service.LevelService;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.URISyntaxException;
 
+import static ru.sinitsynme.socketfilword.repository.FilwordRepositories.STATISTICS_JDBC_REPOSITORY;
 import static ru.sinitsynme.socketfilword.repository.FilwordRepositories.USER_JDBC_REPOSITORY;
 
 public class ServerThread extends Thread {
@@ -17,7 +20,10 @@ public class ServerThread extends Thread {
 
     public ServerThread(final Socket clientSocket) {
         this.clientSocket = clientSocket;
-        clientRequestProcessor = new ClientRequestProcessor(new AuthorizationService(USER_JDBC_REPOSITORY));
+        clientRequestProcessor = new ClientRequestProcessor(
+                new AuthorizationService(USER_JDBC_REPOSITORY),
+                new LevelService(STATISTICS_JDBC_REPOSITORY)
+        );
     }
 
     public Socket getClientSocket() {
@@ -47,6 +53,8 @@ public class ServerThread extends Thread {
             System.out.println(">>> Ошибка ввода-вывода! Соединение разорвано: " + e.getMessage());
         } catch (ClassNotFoundException e) {
             System.out.println(">>> Ошибка нахождения класса! Соединение разорвано. " + e.getMessage());
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
         }
         try {
             clientSocket.close();

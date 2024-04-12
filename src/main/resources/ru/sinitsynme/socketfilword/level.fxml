@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.text.Text?>
 <?import javafx.scene.control.Button?>
-<GridPane fx:controller="ru.sinitsynme.socketfilword.controller.AuthorizationController"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
-    <padding>
-        <Insets top="25" right="25" bottom="10" left="25"/>
-    </padding>
+<VBox fx:id="container" fx:controller="ru.sinitsynme.socketfilword.controller.LevelController"
+      xmlns:fx="http://javafx.com/fxml" alignment="center">
 
-    <Text text="Уровень"
-          GridPane.columnIndex="0" GridPane.rowIndex="0"
-          GridPane.columnSpan="2"/>
+    <GridPane alignment="TOP_CENTER" hgap="100" vgap="30" style="-fx-margin: 0 0 50 0;">
+        <Label fx:id="timerLabel" text="00:00" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <Button text="Выйти из игры" GridPane.columnIndex="3" GridPane.rowIndex="0" onMouseClicked="#logout"/>
+    </GridPane>
 
-    <Button text="Зарегистрироваться"
-            onAction="#authCall"/>
+    <GridPane alignment="TOP_CENTER" fx:id="gridPane">
 
-</GridPane>
+    </GridPane>
+
+</VBox>

@@ -24,7 +24,7 @@ public class StatisticsJdbcRepository extends AbstractJdbcRepository<Statistics,
             PreparedStatement statement = connection.prepareStatement(request);
             statement.setInt(1, userId);
 
-            ResultSet resultSet = statement.executeQuery(request);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Statistics statistics = new Statistics();
                 statistics.setId(UUID.fromString(resultSet.getString(1)));
@@ -50,7 +50,7 @@ public class StatisticsJdbcRepository extends AbstractJdbcRepository<Statistics,
             PreparedStatement statement = connection.prepareStatement(request);
             statement.setInt(1, levelId);
 
-            ResultSet resultSet = statement.executeQuery(request);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Statistics statistics = new Statistics();
                 statistics.setId(UUID.fromString(resultSet.getString(1)));

@@ -54,12 +54,6 @@ public class AuthorizationController {
         routeTo("register.fxml");
     }
 
-    @FXML
-    protected void authCall() throws IOException {
-        System.out.println(authorizationDto);
-    }
-
-
     private void routeTo(String route) throws IOException {
         Stage stage = (Stage) usernameField.getScene().getWindow();
         stageController.openScene(stage, route);
