@@ -58,6 +58,11 @@ public class RegistrationController {
         }
     }
 
+    @FXML
+    protected void signinButtonPressed() throws IOException {
+        routeTo("login.fxml");
+    }
+
     private void routeTo(String route) throws IOException {
         Stage stage = (Stage) usernameField.getScene().getWindow();
         stageController.openScene(stage, route);

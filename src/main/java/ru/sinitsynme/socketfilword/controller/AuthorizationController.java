@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -13,6 +14,8 @@ import javafx.stage.Window;
 import ru.sinitsynme.socketfilword.FilwordApplication;
 import ru.sinitsynme.socketfilword.server.dto.AuthenticationRequestDto;
 import ru.sinitsynme.socketfilword.server.dto.AuthenticationResponseDto;
+import ru.sinitsynme.socketfilword.server.dto.LevelRequestDto;
+import ru.sinitsynme.socketfilword.server.dto.LevelResponseDto;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,7 +41,15 @@ public class AuthorizationController {
             AuthenticationResponseDto responseDto = (AuthenticationResponseDto) serverConnection.doRequest(authenticationRequestDto);
             if (responseDto.status() == 0) {
                 authorizationDto = responseDto.authorizationDto();
-                routeTo("level.fxml");
+                LevelResponseDto levelResponseDto = (LevelResponseDto) serverConnection.doRequest(new LevelRequestDto(authorizationDto));
+                if (levelResponseDto.status() == 0) {
+                    routeTo("level.fxml");
+                }
+                else if (levelResponseDto.status() == -2) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Ура! Вы прошли все уровни! Ожидайте обновлений");
+                    alert.setTitle("Все уровни пройдены!");
+                    alert.showAndWait();
+                }
             }
             else {
                 actionTarget.setText(responseDto.message());

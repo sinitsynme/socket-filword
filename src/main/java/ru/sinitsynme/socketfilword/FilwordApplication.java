@@ -25,6 +25,7 @@ public class FilwordApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         stage.setTitle(APPLICATION_NAME);
+        stage.setResizable(false);
         stage.setOnCloseRequest(windowEvent -> {
             authorizationDto = null;
             try {

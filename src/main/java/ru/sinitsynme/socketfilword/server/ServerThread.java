@@ -4,6 +4,7 @@ import ru.sinitsynme.socketfilword.server.dto.FinishConnectionDto;
 import ru.sinitsynme.socketfilword.server.messageProcessor.ClientRequestProcessor;
 import ru.sinitsynme.socketfilword.service.AuthorizationService;
 import ru.sinitsynme.socketfilword.service.LevelService;
+import ru.sinitsynme.socketfilword.service.StatisticsService;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,8 +23,8 @@ public class ServerThread extends Thread {
         this.clientSocket = clientSocket;
         clientRequestProcessor = new ClientRequestProcessor(
                 new AuthorizationService(USER_JDBC_REPOSITORY),
-                new LevelService(STATISTICS_JDBC_REPOSITORY)
-        );
+                new LevelService(STATISTICS_JDBC_REPOSITORY),
+                new StatisticsService(USER_JDBC_REPOSITORY, STATISTICS_JDBC_REPOSITORY));
     }
 
     public Socket getClientSocket() {

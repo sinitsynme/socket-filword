@@ -49,6 +49,27 @@ public class UserJdbcRepository extends AbstractJdbcRepository<FilwordUser, Inte
         }
     }
 
+    public Optional<FilwordUser> getUserById(Integer id) {
+        try {
+            Connection connection = getConnection();
+            String request = "SELECT * FROM filword_user WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(request);
+            statement.setInt(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) return Optional.empty();
+
+            FilwordUser filwordUser = new FilwordUser();
+            filwordUser.setId(resultSet.getInt(1));
+            filwordUser.setUsername(resultSet.getString(2));
+            filwordUser.setPassword(resultSet.getString(3));
+
+            return Optional.of(filwordUser);
+        } catch (SQLException e) {
+            throw new RuntimeException(String.format("Не удалось выполнить запрос: %s", e.getMessage()));
+        }
+    }
+
     @Override
     public List<FilwordUser> getAll() {
         List<FilwordUser> users = new ArrayList<>();

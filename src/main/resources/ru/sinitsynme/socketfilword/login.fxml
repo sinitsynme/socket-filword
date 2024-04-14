@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 <VBox alignment="center" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea"
-      fx:controller="ru.sinitsynme.socketfilword.controller.AuthorizationController">
+      fx:controller="ru.sinitsynme.socketfilword.controller.AuthorizationController" style="-fx-font-size:16">
     <Text text="Войдите в Страну Филвордов"/>
 
     <GridPane alignment="center" hgap="10" vgap="10">
@@ -35,7 +35,8 @@
 
     </GridPane>
     <VBox alignment="center">
-        <Text text="Как только произойдет успешная авторизация, вы начнете играть в случайные уровни, которые еще не прошли"/>
+        <Text text="Как только произойдет успешная авторизация, вы начнете"/>
+        <Text text="играть в случайные уровни, которые еще не прошли"/>
 
         <Label fx:id="actionTarget" style="-fx-text-fill: red;"/>
 

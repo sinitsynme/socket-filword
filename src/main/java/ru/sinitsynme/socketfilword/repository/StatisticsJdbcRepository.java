@@ -119,4 +119,17 @@ public class StatisticsJdbcRepository extends AbstractJdbcRepository<Statistics,
             throw new RuntimeException(String.format("Не удалось выполнить запрос: %s", e.getMessage()));
         }
     }
+
+    public void deleteByUserIdAndLevelId(int userId, int levelId) {
+        try {
+            Connection connection = getConnection();
+            String request = "DELETE FROM statistics WHERE user_id = ? AND level_id = ?";
+            PreparedStatement statement = connection.prepareStatement(request);
+            statement.setInt(1, userId);
+            statement.setInt(2, levelId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(String.format("Не удалось выполнить запрос: %s", e.getMessage()));
+        }
+    }
 }

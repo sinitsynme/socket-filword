@@ -4,16 +4,31 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
 <VBox fx:id="container" fx:controller="ru.sinitsynme.socketfilword.controller.LevelController"
-      xmlns:fx="http://javafx.com/fxml" alignment="center">
+      xmlns:fx="http://javafx.com/fxml" alignment="center" spacing="50" style="-fx-font-size:16">
 
     <GridPane alignment="TOP_CENTER" hgap="100" vgap="30" style="-fx-margin: 0 0 50 0;">
         <Label fx:id="timerLabel" text="00:00" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-        <Button text="Выйти из игры" GridPane.columnIndex="3" GridPane.rowIndex="0" onMouseClicked="#logout"/>
+        <Button fx:id="logoutButton" text="Выйти из игры" GridPane.columnIndex="3" GridPane.rowIndex="0" onMouseClicked="#logout"/>
     </GridPane>
 
-    <GridPane alignment="TOP_CENTER" fx:id="gridPane">
+    <HBox spacing="100" style="-fx-margin: 0 0 50 0;">
+        <Label text=" "/>
 
-    </GridPane>
+        <GridPane alignment="TOP_CENTER" fx:id="gridPane">
+
+        </GridPane>
+
+        <VBox spacing="25" fx:id="guessedWordsBox">
+
+            <GridPane alignment="TOP_CENTER" fx:id="wordsPane">
+            </GridPane>
+        </VBox>
+
+
+    </HBox>
+
+
 
 </VBox>

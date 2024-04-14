@@ -5,30 +5,35 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="center" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea" fx:controller="ru.sinitsynme.socketfilword.controller.RegistrationController">
-    <Text text="Регистрация в Стране Филвордов" />
+<VBox alignment="center" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.2-ea"
+      fx:controller="ru.sinitsynme.socketfilword.controller.RegistrationController" style="-fx-font-size:16">
+    <Text text="Регистрация в Стране Филвордов"/>
 
     <GridPane alignment="center" hgap="10" vgap="10">
         <padding>
-            <Insets bottom="10" left="25" right="25" top="25" />
+            <Insets bottom="10" left="25" right="25" top="25"/>
         </padding>
 
-        <Label text="Имя пользователя:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <Label text="Имя пользователя:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 
-        <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-        <Label text="Пароль:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <Label text="Пароль:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
 
-        <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-        <Label text="Подтверждение пароля:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+        <Label text="Подтверждение пароля:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
 
-        <PasswordField fx:id="confirmPasswordField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <PasswordField fx:id="confirmPasswordField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
     </GridPane>
     <VBox alignment="center">
-
-        <Button alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" onAction="#registrationButtonPressed" text="Зарегистрироваться" />
+        <GridPane alignment="center" hgap="10" vgap="10">
+            <Button alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" onAction="#signinButtonPressed" text="Войти"
+                    GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Button alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" onAction="#registrationButtonPressed"
+                    text="Зарегистрироваться" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        </GridPane>
 
         <Label fx:id="actionTarget" style="-fx-text-fill: red;"/>
 

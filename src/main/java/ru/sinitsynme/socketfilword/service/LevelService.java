@@ -34,23 +34,22 @@ public class LevelService {
 
     public LevelResponseDto getUnfinishedLevelContentForUser(LevelRequestDto requestDto) throws URISyntaxException {
         if (requestDto.authorizationDto() == null) {
-            return new LevelResponseDto(-1, "Пользователь не авторизован", null);
+            return new LevelResponseDto(-1, "Пользователь не авторизован", 0, null);
         }
         int userId = requestDto.authorizationDto().id();
         int unfinishedLevelId = getUnfinishedLevelByUser(userId);
 
         if (unfinishedLevelId == -1) {
-            return new LevelResponseDto(-2, "Все уровни пройдены! Поздравляем!", null);
+            return new LevelResponseDto(-2, "Все уровни пройдены! Поздравляем!",0, null);
         }
 
-        List<List<LevelLetter>> levelContent = null;
+        List<List<LevelLetter>> levelContent;
         try {
             levelContent = getLevelContent(unfinishedLevelId);
-            levelContent.forEach(System.out::println);
-            return new LevelResponseDto(0, "", levelContent);
+            return new LevelResponseDto(0, "", unfinishedLevelId, levelContent);
 
         } catch (IOException e) {
-            return new LevelResponseDto(-3, "Уровень не загружен, обратитесь к администратору", null);
+            return new LevelResponseDto(-3, "Уровень не загружен, обратитесь к администратору", 0,null);
         }
     }
 
