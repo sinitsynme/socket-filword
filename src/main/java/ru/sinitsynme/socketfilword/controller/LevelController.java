@@ -5,6 +5,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -12,14 +16,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import ru.sinitsynme.socketfilword.FilwordApplication;
 import ru.sinitsynme.socketfilword.domain.LevelLetter;
 import ru.sinitsynme.socketfilword.server.dto.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static ru.sinitsynme.socketfilword.FilwordApplication.*;
 
@@ -109,11 +111,55 @@ public class LevelController {
             timer.start();
         } else if (responseDto.status() == -2) {
             timerLabel.setVisible(false);
+
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Ура! Вы прошли все уровни! Ожидайте обновлений");
             alert.setTitle("Все уровни пройдены!");
             alert.showAndWait()
                     .filter(response -> response == ButtonType.OK)
-                    .ifPresent(response -> logoutButton.fire());
+                    .ifPresent(response -> {
+                    });
+            gridPane.getChildren().clear();
+
+            PlayerStatisticsResponseDto playerStatistics = (PlayerStatisticsResponseDto) serverConnection.doRequest(new PlayerStatisticsRequestDto(authorizationDto));
+            if (playerStatistics.status() != 0) {
+                Alert nalert = new Alert(Alert.AlertType.ERROR, "Вы прошли все уровни, но статистика не загрузилась");
+                nalert.setTitle("Все уровни пройдены!");
+                nalert.showAndWait()
+                        .filter(response -> response == ButtonType.OK)
+                        .ifPresent(response -> logoutButton.fire());
+            }
+            else {
+                container.getChildren().clear();
+                List<SingleStatisticsResponseDto> statisticsResponseDtos = playerStatistics.statisticsList();
+                VBox box = new VBox(10);
+                box.setAlignment(Pos.CENTER);
+                Label label = new Label("Статистика прохождения уровней");
+                label.setStyle("-fx-font-weight: bold");
+                box.getChildren().add(label);
+
+                for (int i = 0; i < statisticsResponseDtos.size(); i++) {
+                    var stats = statisticsResponseDtos.get(i);
+                    box.getChildren().add(new Label(String.format("Уровень %d -> %d минут %d секунд",
+                            stats.levelId(),
+                            stats.completionTimeInSeconds() / 60,
+                            stats.completionTimeInSeconds() % 60
+                    )));
+                }
+                logoutButton.setVisible(false);
+                Button button = new Button("Выйти из игры");
+                button.setStyle("-fx-margin: 0 0 50 0");
+                button.setOnAction(ev -> {
+                    try {
+                        authorizationDto = null;
+                        Stage stage = (Stage) button.getScene().getWindow();
+                        stageController.openScene(stage, "login.fxml");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                box.getChildren().add(button);
+                container.getChildren().add(box);
+            }
         }
 
     }
@@ -314,7 +360,7 @@ public class LevelController {
 
     @FXML
     private void routeTo(String route) throws IOException {
-        Stage stage = (Stage) container.getScene().getWindow();
+        Stage stage = (Stage) guessedWordsBox.getScene().getWindow();
         stageController.openScene(stage, route);
     }
 

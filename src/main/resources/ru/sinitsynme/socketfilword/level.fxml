@@ -13,7 +13,7 @@
         <Button fx:id="logoutButton" text="Выйти из игры" GridPane.columnIndex="3" GridPane.rowIndex="0" onMouseClicked="#logout"/>
     </GridPane>
 
-    <HBox spacing="100" style="-fx-margin: 0 0 50 0;">
+    <HBox spacing="100" style="-fx-margin: 0 0 50 0;" fx:id="fieldHBox">
         <Label text=" "/>
 
         <GridPane alignment="TOP_CENTER" fx:id="gridPane">
@@ -21,14 +21,10 @@
         </GridPane>
 
         <VBox spacing="25" fx:id="guessedWordsBox">
-
             <GridPane alignment="TOP_CENTER" fx:id="wordsPane">
             </GridPane>
         </VBox>
-
-
     </HBox>
-
 
 
 </VBox>

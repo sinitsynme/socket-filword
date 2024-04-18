@@ -35,6 +35,9 @@ public class ClientRequestProcessor {
         else if (request instanceof StatisticsTopRequestDto statisticsTopRequestDto) {
             return processStatisticsTopMessage(statisticsTopRequestDto);
         }
+        else if (request instanceof PlayerStatisticsRequestDto playerStatisticsRequestDto) {
+            return processPlayerStatisticsMessage(playerStatisticsRequestDto);
+        }
         return new Object();
     }
 
@@ -56,5 +59,9 @@ public class ClientRequestProcessor {
 
     private Object processStatisticsTopMessage(StatisticsTopRequestDto statisticsTopRequestDto) {
         return statisticsService.getTopStatisticsWithCurrentPlayer(statisticsTopRequestDto);
+    }
+
+    private Object processPlayerStatisticsMessage(PlayerStatisticsRequestDto playerStatisticsRequestDto) {
+        return statisticsService.getPlayerStatistics(playerStatisticsRequestDto);
     }
 }

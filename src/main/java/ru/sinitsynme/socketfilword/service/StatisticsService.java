@@ -39,6 +39,19 @@ public class StatisticsService {
         return new StatisticsSaveResponseDto(0, "");
     }
 
+    public PlayerStatisticsResponseDto getPlayerStatistics(PlayerStatisticsRequestDto requestDto) {
+        if (requestDto.authorizationDto() == null) {
+            return new PlayerStatisticsResponseDto(-1, "Пользователь не авторизован!", null);
+        }
+        FilwordUser filwordUser = userJdbcRepository.getUserById(requestDto.authorizationDto().id()).orElseThrow();
+        List<SingleStatisticsResponseDto> statisticsList = statisticsJdbcRepository
+                .getByUserId(requestDto.authorizationDto().id()).stream()
+                .map(stat -> new SingleStatisticsResponseDto(stat.getLevelId(), filwordUser.getUsername(), stat.getCompletionTimeInSeconds()))
+                .sorted(Comparator.comparingInt(SingleStatisticsResponseDto::levelId))
+                .toList();
+        return new PlayerStatisticsResponseDto(0, "", statisticsList);
+    }
+
     public StatisticsTopResponseDto getTopStatisticsWithCurrentPlayer(StatisticsTopRequestDto requestDto) {
         List<Statistics> statisticsList = statisticsJdbcRepository.getByLevelId(requestDto.levelId());
         statisticsList.sort(Comparator.comparingInt(Statistics::getCompletionTimeInSeconds));

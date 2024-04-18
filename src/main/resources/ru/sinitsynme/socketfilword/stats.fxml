@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<HBox spacing="50" style="-fx-margin: 0 0 25 0;" fx:id="statsHBox" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ru.sinitsynme.socketfilword.controller.StatsController">
+
+
+    <GridPane alignment="TOP_CENTER" fx:id="statsPane">
+
+    </GridPane>
+
+    <Button fx:id="logoutButton" text="Выйти из игры" GridPane.columnIndex="3" GridPane.rowIndex="0" onMouseClicked="#logout"/>
+
+</HBox>
